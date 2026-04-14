@@ -7,7 +7,7 @@ services:
     hostname: sparkmaster
     command: >
       sh -c "
-      $SPARK_HOME/sbin/start-master.sh &&
+      /usr/local/spark/sbin/start-master.sh &&
       tail -f /dev/null"
     ports:
       - "8080:8080"
@@ -20,5 +20,5 @@ services:
       - spark-master
     command: >
       sh -c "
-      $SPARK_HOME/sbin/start-slave.sh spark://sparkmaster:7077 &&
+      /usr/local/spark/sbin/start-slave.sh spark://sparkmaster:7077 &&
       tail -f /dev/null"
