@@ -2,23 +2,21 @@ version: "3.7"
 
 services:
   spark-master:
-    build: .
-    container_name: spark-master
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
     hostname: sparkmaster
     command: >
-      sh -c "
-      /usr/local/spark/sbin/start-master.sh &&
-      tail -f /dev/null"
+      sh -c "/usr/local/spark/sbin/start-master.sh && tail -f /dev/null"
     ports:
       - "8080:8080"
       - "7077:7077"
 
   spark-worker:
-    build: .
-    container_name: spark-worker
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
     depends_on:
       - spark-master
     command: >
-      sh -c "
-      /usr/local/spark/sbin/start-slave.sh spark://sparkmaster:7077 &&
-      tail -f /dev/null"
+      sh -c "/usr/local/spark/sbin/start-slave.sh spark://sparkmaster:7077 && tail -f /dev/null"
