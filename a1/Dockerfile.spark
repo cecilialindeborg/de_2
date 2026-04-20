@@ -8,5 +8,5 @@ RUN mv spark-2.4.3-bin-hadoop2.7/ /usr/local/spark
 ENV SPARK_HOME="/usr/local/spark"
 ENV PATH="${PATH}:$SPARK_HOME/bin"
 ENV SPARK_NO_DAEMONIZE="true"
-
+RUN sleep 5
 CMD ["sh", "-c", "screen -d -m ${SPARK_HOME}/sbin/start-master.sh; ${SPARK_HOME}/sbin/start-slave.sh spark://sparkmaster:7077 && tail -f /dev/null"]
