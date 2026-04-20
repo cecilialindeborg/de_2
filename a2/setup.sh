@@ -1,4 +1,5 @@
-#!/bin/bash
+#chmod +x setup.sh
+#./setup.sh
 
 echo "Updating system..."
 sudo apt update && sudo apt upgrade -y
