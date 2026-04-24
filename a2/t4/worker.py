@@ -2,24 +2,25 @@ import pulsar
 
 client = pulsar.Client('pulsar://localhost:6650')
 
-consumer = client.subscribe('input-topic', subscription_name='worker-sub', consumer_type=pulsar.ConsumerType.Shared)
+consumer = client.subscribe(
+    'input-topic', subscription_name='worker-sub', consumer_type=pulsar.ConsumerType.Shared)
 producer = client.create_producer('output-topic')
 
-print("Worker running")
+print("Worker running...")
 
 while True:
 
-    msg = consumer.receive()
-    word = msg.data().decode('utf-8')
+    message = consumer.receive()
+    word = message.data()
 
     if word == "__END__":
-        producer.send(msg.data())
-        consumer.acknowledge(msg)
+        producer.send(message.data())
+        consumer.acknowledge(message)
         continue
-    
+
     processed = word.upper()
 
-    producer.send(processed.encode('utf-8'))
+    producer.send(processed)
     print(f"Processed: {word} -> {processed}")
 
-    consumer.acknowledge(msg)
+    consumer.acknowledge(message)

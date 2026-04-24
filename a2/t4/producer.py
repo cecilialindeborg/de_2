@@ -8,8 +8,10 @@ INPUT_STRING = "Curabitur tempus lorem sed ipsum tempus pretium. Morbi at nulla 
 words = INPUT_STRING.split()
 
 for word in words:
-    producer.send(word.encode('utf-8'))
+    producer.send(word)
     print(f"Sent: {word}")
 
+# Add __END__ and the end of the message. Previous version had the same solution as conversion.py with a
+# static number delcaring the number of interations. This enables long messages to be sent.
 producer.send(b"__END__")
 client.close()
