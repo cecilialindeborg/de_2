@@ -20,7 +20,7 @@ while True:
 
     processed = word.upper()
 
-    producer.send(processed)
+    producer.send(processed.encode('utf-8'))
     print(f"Processed: {word} to {processed}")
 
     consumer.acknowledge(message)
