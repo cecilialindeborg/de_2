@@ -12,6 +12,11 @@ while True:
     msg = consumer.receive()
     word = msg.data().decode('utf-8')
 
+    if word == "__END__":
+        producer.send(msg.data())
+        consumer.acknowledge(msg)
+        continue
+    
     processed = word.upper()
 
     producer.send(processed.encode('utf-8'))

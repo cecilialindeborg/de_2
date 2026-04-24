@@ -9,19 +9,20 @@ consumer = client.subscribe(
 
 results = []
 
+while True:
+    msg = consumer.receive()
+    word = msg.data().decode('utf-8')
 
-expected_words = 5
-
-while len(results) < expected_words:
-    message = consumer.receive()
-    word = message.data().decode('utf-8')
+    if word == "__END__":
+        consumer.acknowledge(msg)
+        break
 
     results.append(word)
     print(f"Received: {word}")
 
-    consumer.acknowledge(message)
+    consumer.acknowledge(msg)
 
 final_string = " ".join(results)
-print("\nFinal result:", final_string)
+print("\nFinal merged string:", final_string)
 
 client.close()

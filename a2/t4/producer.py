@@ -11,4 +11,5 @@ for word in words:
     producer.send(word.encode('utf-8'))
     print(f"Sent: {word}")
 
+producer.send(b"__END__")
 client.close()
