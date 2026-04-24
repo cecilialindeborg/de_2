@@ -11,7 +11,7 @@ results = []
 
 while True:
     message = consumer.receive()
-    word = message.data()
+    word = message.data().decode('utf-8')
 
     if word == "__END__":
         consumer.acknowledge(message)

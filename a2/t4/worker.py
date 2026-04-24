@@ -11,7 +11,7 @@ print("Worker running...")
 while True:
 
     message = consumer.receive()
-    word = message.data()
+    word = message.data().decode('utf-8')
 
     if word == "__END__":
         producer.send(message.data())
@@ -21,6 +21,6 @@ while True:
     processed = word.upper()
 
     producer.send(processed)
-    print(f"Processed: {word} -> {processed}")
+    print(f"Processed: {word} to {processed}")
 
     consumer.acknowledge(message)

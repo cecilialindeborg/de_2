@@ -8,7 +8,7 @@ INPUT_STRING = "Curabitur tempus lorem sed ipsum tempus pretium. Morbi at nulla 
 words = INPUT_STRING.split()
 
 for word in words:
-    producer.send(word)
+    producer.send(word.encode('utf-8'))
     print(f"Sent: {word}")
 
 # Add __END__ and the end of the message. Previous version had the same solution as conversion.py with a
