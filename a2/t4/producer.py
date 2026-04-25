@@ -11,7 +11,8 @@ for word in words:
     producer.send(word.encode('utf-8'))
     print(f"Sent: {word}")
 
-# Add __END__ and the end of the message. Previous version had the same solution as conversion.py with a
-# static number delcaring the number of interations. This enables long messages to be sent.
+# Note: Added __END__ and the end of the message, this enables long messages with unknown length to be sent. 
+# In a previous version, I had the same solution as conversion.py with a
+# static number delcaring the number of interations, but it did not work with the lorem-ipsum example.
 producer.send(b"__END__")
 client.close()
