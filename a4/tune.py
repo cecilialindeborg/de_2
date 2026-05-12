@@ -39,7 +39,7 @@ def train_rf(config):
         model, X_train_local, y_train_local, cv=3, n_jobs=1
     )
 
-    tune.report(cv_score=scores.mean())
+    tune.report({"cv_score": scores.mean()})
 
 search_space = {
     "max_depth": tune.grid_search([10, 20]),
