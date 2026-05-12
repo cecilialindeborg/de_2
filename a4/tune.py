@@ -36,6 +36,7 @@ def train_rf(config):
         max_depth=config["max_depth"],
         n_estimators=config["n_estimators"],
         ccp_alpha=config["ccp_alpha"],
+        random_state=42,
         n_jobs=1
     )
 
