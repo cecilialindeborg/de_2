@@ -18,11 +18,15 @@ X_train, X_test, y_train, y_test = train_test_split(
 ray.shutdown()
 ray.init(address="auto")
 
-X_train_ray = X_train[:50000]
-y_train_ray = y_train[:50000]
+# X_train_ray = X_train[:50000]
+# y_train_ray = y_train[:50000]
 
-X_train_ref = ray.put(X_train_ray)
-y_train_ref = ray.put(y_train_ray)
+# X_train_ref = ray.put(X_train_ray)
+# y_train_ref = ray.put(y_train_ray)
+
+X_train_ref = ray.put(X_train)
+y_train_ref = ray.put(y_train)
+
 
 def train_rf(config):
     X_train_local = ray.get(X_train_ref)
