@@ -8,7 +8,7 @@ from ray import tune
 from sklearn.model_selection import cross_val_score
 from sklearn.ensemble import RandomForestClassifier
 
-
+print("Starting task1.py")
 X, y = fetch_covtype(return_X_y=True)
 
 X_train, X_test, y_train, y_test = train_test_split(
@@ -36,16 +36,22 @@ print("Mean CV Score:", scores.mean())
 ray.shutdown()
 ray.init(address="auto")
 
+X_train_ref = ray.put(X_train)
+y_train_ref = ray.put(y_train)
+
 def train_rf(config):
+    X_train_local = ray.get(X_train_ref)
+    y_train_local = ray.get(y_train_ref)
 
     model = RandomForestClassifier(
         max_depth=config["max_depth"],
         n_estimators=config["n_estimators"],
         ccp_alpha=config["ccp_alpha"],
+        n_jobs=1
     )
 
     scores = cross_val_score(
-        model, X_train, y_train, cv=3
+        model, X_train_local, y_train_local, cv=3, n_jobs=1
     )
 
     tune.report(cv_score=scores.mean())
